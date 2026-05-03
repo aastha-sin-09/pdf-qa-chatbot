@@ -7,7 +7,15 @@ import requests
 from dotenv import load_dotenv
 
 load_dotenv()
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+def get_api_key():
+    try:
+        import streamlit as st
+        return st.secrets["GROQ_API_KEY"]
+    except Exception:
+        return os.getenv("GROQ_API_KEY")
+
+GROQ_API_KEY = get_api_key()
 
 def load_pdf(file_path):
     doc = fitz.open(file_path)
